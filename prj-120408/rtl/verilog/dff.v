@@ -1,3 +1,4 @@
+`include "timescale.v"
 module dff(
 	clk_i,
 

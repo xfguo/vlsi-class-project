@@ -1,3 +1,4 @@
+`include "timescale.v"
 module full_adder(
 	a_i, b_i, cy_i, 
 	y_o, cy_o

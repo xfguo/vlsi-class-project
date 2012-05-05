@@ -1,3 +1,4 @@
+`include "timescale.v"
 module counter(
 	clk_i,
 	rst_i,
