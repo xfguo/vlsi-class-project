@@ -30,9 +30,10 @@ end
 
 initial begin
 	// Test Asynchronous Reset
-	$display("\n\nTEST DFF");
-	$display("-----------------------------------------------------");
 	#13;
+	$display("=====================================================");
+	$display("TEST DFF");
+	$display("-----------------------------------------------------");
 	$display("%t:q_o = %08b", $time, q_o);
 	rst_i = 1;
 	#1;

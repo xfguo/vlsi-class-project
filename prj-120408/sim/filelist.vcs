@@ -3,3 +3,5 @@
 ../rtl/verilog/dff.v
 ../rtl/verilog/full_adder.v
 ../bench/tb_dff.v
+../bench/tb_full_adder.v
+../bench/tb_counter.v
