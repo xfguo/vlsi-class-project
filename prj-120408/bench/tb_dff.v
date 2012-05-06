@@ -63,7 +63,7 @@ initial begin
 	$display("Test Synchronous Input:%s", q_o == 8'h55 ?"PASS":"FAIL");
 
 	$display("-----------------------------------------------------");
-//	$finish;
+	$finish;
 end
 
 endmodule

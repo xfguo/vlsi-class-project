@@ -63,8 +63,7 @@ initial begin
 	cy_i = 1;
 	#1;
 	$display("%d + %d + (CY:%d) = %d (CY:%d) | %s", a_i, b_i, cy_i, y_o, cy_o, (cy_o == 1 && y_o == 0)?"PASS":"FAIL");
-//	$finish;
-	$fsdbDumpFinish;
+	$finish;
 end
 
 endmodule
