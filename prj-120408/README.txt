@@ -2,7 +2,7 @@ Class Project Info:
 Student ID:11220720080 郭雄飞
 =============================
 EDA Tool: Synopsys VCS, Verdi
-Platform: Linux 64-bit
+Platform: Linux 64-bit (Fedora 14 64-bit Version)
 
 How to run:
 	% cd sim
