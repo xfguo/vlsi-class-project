@@ -16,6 +16,8 @@ full_adder uut (
 );
 
 initial begin
+	$fsdbDumpfile("db_tb_full_adder.fsdb");
+	$fsdbDumpvars;
 	$display("=====================================================");
 	$display("TEST FULL ADDER");
 	$display("-----------------------------------------------------");
@@ -61,7 +63,8 @@ initial begin
 	cy_i = 1;
 	#1;
 	$display("%d + %d + (CY:%d) = %d (CY:%d) | %s", a_i, b_i, cy_i, y_o, cy_o, (cy_o == 1 && y_o == 0)?"PASS":"FAIL");
-	$finish;
+//	$finish;
+	$fsdbDumpFinish;
 end
 
 endmodule

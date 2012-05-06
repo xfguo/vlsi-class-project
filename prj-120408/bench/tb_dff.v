@@ -20,8 +20,8 @@ dff #(WIDTH) uut (
 parameter PERIOD = 10;
 
 initial begin
-//	$fsdbDumpfile("db_tb_dff.fsdb");
-//	$fsdbDumpvars(0, tb_dff);
+	$fsdbDumpfile("db_tb_dff.fsdb");
+	$fsdbDumpvars;
 	clk_i = 1'b0;
 	#(PERIOD/2);
 	forever
@@ -38,7 +38,7 @@ initial begin
 	rst_i = 1;
 	#1;
 	$display("%t:q_o = %08b", $time, q_o);
-	$display("Test Asynchronous Reset:%s", q_o == 8'd0?"PASS":"FAIL");
+	$display("Test Asynchronous Reset:%s", q_o == 8'd0 ?"PASS":"FAIL");
 	$display("-----------------------------------------------------");
 	#1;
 	$display("%t:q_o = %08b", $time, q_o);
@@ -63,7 +63,7 @@ initial begin
 	$display("Test Synchronous Input:%s", q_o == 8'h55 ?"PASS":"FAIL");
 
 	$display("-----------------------------------------------------");
-	$finish;
+//	$finish;
 end
 
 endmodule
