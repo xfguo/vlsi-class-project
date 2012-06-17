@@ -1,0 +1,6 @@
++incdir+../include
++libext+.v
++define+POSTSIM
+-v ../syn/lib/tsmc35/core_33v/verilog/models
+../bench/tb_alu.sv
+../syn/netlist/with_scanCell_alu.v
