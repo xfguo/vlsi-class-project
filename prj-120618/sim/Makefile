@@ -1,7 +1,7 @@
 
 VCS_DEBUSSY_ARGS=-P ${NOVAS_HOME}/share/PLI/vcs_latest/LINUX/novas.tab ${NOVAS_HOME}/share/PLI/vcs_latest/LINUX/pli.a
 
-all: test_full_adder test_dff test_counter
+all: test_alu
 
 test_%:
 	vcs \

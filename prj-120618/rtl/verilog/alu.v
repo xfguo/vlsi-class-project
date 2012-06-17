@@ -1,5 +1,4 @@
-module alu(
-
+module alu_74_181(
 input 		mode_control_i,
 input	[3:0]	select_input_i,
 
@@ -12,6 +11,6 @@ output		generate_output_o,
 output		propagate_output_o,
 output		carry_output_o,
 output		cmp_output_o
-
 );
+
 endmodule

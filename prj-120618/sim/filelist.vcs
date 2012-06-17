@@ -1,1 +1,2 @@
 ../rtl/verilog/alu.v
+../rtl/verilog/carry_lookahead_adder.v
