@@ -1,13 +1,10 @@
 
 VCS_DEBUSSY_ARGS=-P ${NOVAS_HOME}/share/PLI/vcs_latest/LINUX/novas.tab ${NOVAS_HOME}/share/PLI/vcs_latest/LINUX/pli.a
 
-all: test_alu
-
-test_%:
+all:
 	vcs \
 		+v2k\
 		-f filelist.vcs \
-		../bench/tb_$(subst test_,,$@).v \
 		${VCS_DEBUSSY_ARGS}
 	env LD_LIBRARY_PATH=/eda/novas/novas-201010/share/PLI/vcs_latest/LINUX64 ./simv
 
