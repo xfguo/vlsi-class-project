@@ -1,3 +1,4 @@
+`include "timescale.v"
 module alu(
 input 		mode_control_i,
 input	[3:0]	select_input_i,

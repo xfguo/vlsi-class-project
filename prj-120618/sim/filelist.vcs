@@ -1,4 +1,3 @@
 +incdir+../include
 ../rtl/verilog/alu.v
 ../bench/tb_alu.sv
-../doc/74181b.v
