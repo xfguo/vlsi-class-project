@@ -3,9 +3,9 @@ set rpt   my_report_timing
 
 set search_path         "."
 
-#set search_path [concat $search_path  \
+set search_path [concat $search_path  \
                    [list  \
-                         "~/syn" \
+                         "../include" \
                    ] \
                 ]
 

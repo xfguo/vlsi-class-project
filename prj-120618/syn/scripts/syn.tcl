@@ -11,11 +11,11 @@ read_file -format verilog {{../rtl/verilog/alu.v}}
 
 current_design $DESIGN 
 
-#source -e ./scripts/cons.tcl
+source -e ./scripts/cons.tcl
 
-compile -scan
+#compile -scan
  
-#compile  
+compile  
 
 
 ##------------------------------------------------##
