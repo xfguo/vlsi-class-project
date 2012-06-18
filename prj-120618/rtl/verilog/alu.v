@@ -1,3 +1,31 @@
+/******************************************************************************
+ * ALU Module
+ * by Xiongfei GUO (11220720080)
+ * inspired by http://web.eecs.umich.edu/~jhayes/iscas/74181.html
+ * Jun 18, 2012
+ *****************************************************************************/
+
+/******************************************************************************
+Function Table
+
+sel	mode=1		mode=1,carry=1	mode=1,carry=0	
+0000	~a		a		a+1
+0001	~(a|b)		a|b		(a|b)+1
+0010	~a&b		a|~b		(a|~b)+1
+0011	0		-1		0
+0100	~(a&b)		a + (a&~b)	a+(a&~b)+1
+0101	~b		(a|b)+(a&~b)	(a|b)+(a&~b)+1	
+0110	a^b		a-b-1		a-b
+0111	a&~b		(a&~b)-1	(a&~b)
+1000	~a|b		a+(a&b)		a+(a&b)+1	
+1001	~(a^b)		a+b		a+b+1
+1010	b		(a|~b)+(a&b)	(a|~b)+(a&b)+1
+1011	a&b		(a&b)-1		(a&b)	
+1100	f		a+a		a+a+1
+1101	a|~b		(a|b) + a	(a|b) + a +1	
+1110	a|b		(a|~b) + a	(a|~b) + a+1	
+1111	a		a-1		a
+******************************************************************************/
 `include "timescale.v"
 module alu(
 input 		mode_control_i,
@@ -20,22 +48,11 @@ reg	[3:0]	gen;
 reg		group_gen;
 reg		group_prop;
 
-// Sum & Carry
 always @(*) begin
 	gen	= ~((select_input_i[3]?(operand_a_i & operand_b_i):4'd0) | (select_input_i[2]?(operand_a_i & ~operand_b_i):4'd0));
 	prop	= ~((select_input_i[1]?(~operand_b_i):4'd0) | (select_input_i[0]?operand_b_i:4'd0) | operand_a_i);
 end
 
-/*
-always @(*) begin
-	carry[0]	= ~carry_input_i;
-	for(i = 0;i < 4;i=i+1) begin
-		carry[i+1]	= gen[i] | (prop[i] & carry[i]);
-		sum[i]		= prop[i] ^ carry[i];
-	end
-	sum[4]		= carry[4];
-end
-*/
 always @(*) begin
 	carry[0] = ~carry_input_i;
 	carry[1] = ~(prop[0] | (carry_input_i & gen[0]));
@@ -68,42 +85,5 @@ assign	propagate_output_o = group_prop;
 assign	function_output_o = (prop ^ gen) ^ ({4{mode_control_i}}|carry[3:0]);
 assign	carry_output_o = carry[4];
 assign	cmp_output_o = &function_output_o;
-/*
-
-
-0000	~a		a - 1			a			
-0001	~(a&b)		(a&b) - 1		a&b			
-0010	(~a)|b		(a&~b) - 1		a&~b			
-0011	1		-1			0			
-0100	~(a|b)		a + (a|~b)		a + (a|~b) + 1		
-0101	~b		(a&b) + (a|~b)		(a&b) + (a|b~) + 1	
-0110	~(a^b)		a - b - 1		a - b			
-0111	a|~b		a|~b			(a|~b) + 1		
-1000	~a&b		a + (a|b)		a + (a|b) + 1		
-1001	a^b		a + b			a + b + 1		
-1010	b		(a&~b) + (a&b)		(a&~b) + (a&b) + 1	
-1011	a|b		a | b			(a|b) + 1		
-1000	0		a + a			a + a + 1		
-1101	a&~b		(a&b) + a		(a&b) + a + 1		
-1110	a&b		(a&~b) + a		(a&~b) + a + 1		
-1111	a		a			a + 1			
-
-0000	~a		a		a+1
-0001	~(a|b)		a|b		(a|b)+1
-0010	~a&b		a|~b		(a|~b)+1
-0011	0		-1		0
-0100	~(a&b)		a + (a&~b)	a+(a&~b)+1
-0101	~b		(a|b)+(a&~b)	(a|b)+(a&~b)+1	
-0110	a^b		a-b-1		a-b
-0111	a&~b		(a&~b)-1	(a&~b)
-1000	~a|b		a+(a&b)		a+(a&b)+1	
-1001	~(a^b)		a+b		a+b+1
-1010	b		(a|~b)+(a&b)	(a|~b)+(a&b)+1
-1011	a&b		(a&b)-1		(a&b)	
-1000	1		a+a		a+a+1
-1101	a|~b		(a|b) + a	(a|b) + a +1	
-1110	a|b		(a|~b) + a	(a|~b) + a+1	
-1111	a		a-1		a
-*/
 
 endmodule

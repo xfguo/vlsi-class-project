@@ -70,7 +70,7 @@ task test_alu;
 			propagate_output_o,
 			carry_output_o,
 			cmp_output_o,
-			(f_i == function_output_o)?"PASS":"FAIL"
+			(f_i[3:0] == function_output_o)?"PASS":"FAIL"
 			);
 	end
 endtask
@@ -79,47 +79,9 @@ initial begin
 	$fsdbDumpvars;
 end
 integer i;
+integer a, b;
 initial begin
-	print_test_header("f = ~a");
-	for(i = 0;i < 16;i=i+1) begin
-		test_alu(1'b1, 4'b0000, i[3:0], 4'd0, 1'b1, 
-			~i[3:0], 1'b0, 1'b0, 1'b0, 1'b0);
-	end
-	
-	print_test_header("f = ~a");
-	for(i = 0;i < 16;i=i+1) begin
-		test_alu(1'b1, 4'b0000, i[3:0], 4'd0, 1'b0, 
-			~i[3:0], 1'b0, 1'b0, 1'b0, 1'b0);
-	end
-	
-	print_test_header("f = a");
-	for(i = 0;i < 16;i=i+1) begin
-		test_alu(1'b0, 4'b0000, i[3:0], 4'd0, 1'b1, 
-			i[3:0], 1'b0, 1'b0, 1'b0, 1'b0);
-	end
-	
-	print_test_header("f = a + 1");
-	for(i = 0;i < 16;i=i+1) begin
-		test_alu(1'b0, 4'b0000, i[3:0], 4'd0, 1'b0, 
-			i[3:0] + 4'b1, 1'b0, 1'b0, 1'b0, 1'b0);
-	end
-	
-	print_test_header("f = a + 1");
-	for(i = 0;i < 256;i=i+1) begin
-		test_alu(1'b0, 4'b0101, i[7:4], i[3:0], 1'b1, 
-			(i[7:4]|i[3:0])+(i[7:4]&~i[3:0]), 1'b0, 1'b0, 1'b0, 1'b0);
-	end
-/*	
-	test_alu(1'b1, 4'd5, 4'd1, 4'd5, 1'b0);
-	test_alu(1'b1, 4'd5, 4'd2, 4'd6, 1'b0);
-	test_alu(1'b1, 4'd5, 4'd3, 4'd7, 1'b0);
-	test_alu(1'b1, 4'd5, 4'd4, 4'd8, 1'b0);
-
-	test_alu(1'b1, 4'd0, 4'd1, 4'd5, 1'b0);
-	test_alu(1'b1, 4'd0, 4'd2, 4'd6, 1'b0);
-	test_alu(1'b1, 4'd0, 4'd3, 4'd7, 1'b0);
-	test_alu(1'b1, 4'd0, 4'd4, 4'd8, 1'b0);
-*/
+`include "test_pattern.v"
 	$finish;
 end
 
