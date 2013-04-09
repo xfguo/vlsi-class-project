@@ -20,8 +20,6 @@ dff #(WIDTH) uut (
 parameter PERIOD = 10;
 
 initial begin
-	$fsdbDumpfile("db_tb_dff.fsdb");
-	$fsdbDumpvars;
 	clk_i = 1'b0;
 	#(PERIOD/2);
 	forever

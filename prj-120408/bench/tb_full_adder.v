@@ -16,8 +16,6 @@ full_adder uut (
 );
 
 initial begin
-	$fsdbDumpfile("db_tb_full_adder.fsdb");
-	$fsdbDumpvars;
 	$display("=====================================================");
 	$display("TEST FULL ADDER");
 	$display("-----------------------------------------------------");

@@ -23,8 +23,6 @@ counter uut (
 parameter PERIOD = 10;
 
 initial begin
-	$fsdbDumpfile("db_tb_counter.fsdb");
-	$fsdbDumpvars;
 	clk_i = 1'b0;
 	#(PERIOD/2);
 	forever
