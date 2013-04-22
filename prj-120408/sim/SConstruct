@@ -1,0 +1,47 @@
+import os, stat
+
+env = Environment()
+
+# TODO: extend to a class
+def iverilog_compile(target, source, env):
+    top_opt = "-o %s" % str(target[0])
+    tgt_opt = "-s %s" % str(target[0])
+    src_opt = " ".join(list(map(str, source)))
+    inc_opt = "-I " + env["inc_dir"]
+    iv_cmd = \
+        " ".join([
+            "iverilog",
+            inc_opt,
+            src_opt,
+            tgt_opt,
+            top_opt,
+        ]) + "\n" + \
+        "./%s" % str(target[0])
+        
+    script_fn = 'sim_%s.sh' % str(target[0])
+    
+    f = open(script_fn, 'w')
+    f.write(iv_cmd)
+    f.close()
+
+    os.chmod(script_fn, os.stat(script_fn).st_mode | stat.S_IEXEC)
+
+    return None
+
+bld = Builder(action = iverilog_compile)
+env = Environment(BUILDERS = {'IVERILOG' : bld})
+
+env['inc_dir'] = '../include'
+
+vfiles = [
+    '../rtl/verilog/counter.v', 
+    '../rtl/verilog/dff.v', 
+    '../rtl/verilog/full_adder.v',
+    '../bench/tb_counter.v',
+    '../bench/tb_dff.v',
+    '../bench/tb_full_adder.v',
+]
+
+env.IVERILOG('tb_dff', vfiles)
+env.IVERILOG('tb_counter', vfiles)
+env.IVERILOG('tb_full_adder', vfiles)
