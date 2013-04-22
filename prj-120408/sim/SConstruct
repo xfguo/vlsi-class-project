@@ -4,20 +4,25 @@ env = Environment()
 
 # TODO: extend to a class
 def iverilog_compile(target, source, env):
+    filelist_fn = 'filelist.iverilog'
+    filelist_str = "\n".join(list(map(str, source))) + "\n"
+
+    f = open(filelist_fn, 'w')
+    f.write(filelist_str)
+    f.close()
+    
     top_opt = "-o %s" % str(target[0])
     tgt_opt = "-s %s" % str(target[0])
-    src_opt = " ".join(list(map(str, source)))
     inc_opt = "-I " + env["inc_dir"]
     iv_cmd = \
         " ".join([
-            "iverilog",
+            "iverilog -f %s" % filelist_fn,
             inc_opt,
-            src_opt,
             tgt_opt,
             top_opt,
         ]) + "\n" + \
         "./%s" % str(target[0])
-        
+    
     script_fn = 'sim_%s.sh' % str(target[0])
     
     f = open(script_fn, 'w')
@@ -25,6 +30,8 @@ def iverilog_compile(target, source, env):
     f.close()
 
     os.chmod(script_fn, os.stat(script_fn).st_mode | stat.S_IEXEC)
+
+    # ----
 
     return None
 
@@ -34,6 +41,7 @@ env = Environment(BUILDERS = {'IVERILOG' : bld})
 env['inc_dir'] = '../include'
 
 vfiles = Glob('../rtl/verilog/*.v') + Glob('../bench/tb_*.v')
+
 tb_dff = env.IVERILOG('tb_dff', vfiles)
 tb_counter = env.IVERILOG('tb_counter', vfiles)
 tb_full_adder = env.IVERILOG('tb_full_adder', vfiles)
@@ -41,4 +49,7 @@ tb_full_adder = env.IVERILOG('tb_full_adder', vfiles)
 Clean(tb_dff, 'sim_tb_dff.sh')
 Clean(tb_counter, 'sim_tb_counter.sh')
 Clean(tb_full_adder, 'sim_tb_full_adder.sh')
+Clean(tb_dff, "filelist.iverilog")
+Clean(tb_counter, "filelist.iverilog")
+Clean(tb_full_adder, "filelist.iverilog")
 

@@ -1,6 +1,0 @@
-verilog work ../rtl/verilog/counter.v
-verilog work ../rtl/verilog/dff.v
-verilog work ../rtl/verilog/full_adder.v
-verilog work ../bench/tb_counter.v
-verilog work ../bench/tb_dff.v
-verilog work ../bench/tb_full_adder.v
