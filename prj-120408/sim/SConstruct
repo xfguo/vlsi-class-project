@@ -2,14 +2,24 @@ import os, stat
 
 env = Environment()
 
+def write_to_file(fn, cont, executable = None):
+    """Write some contect to file"""
+    f = open(fn, 'w')
+    f.write(cont)
+    f.close()
+    
+    if executable is True:
+        os.chmod(
+            fn, 
+            os.stat(fn).st_mode | stat.S_IEXEC
+        )
+
 # TODO: extend to a class
 def iverilog_compile(target, source, env):
     filelist_fn = 'filelist.iverilog'
     filelist_str = "\n".join(list(map(str, source))) + "\n"
 
-    f = open(filelist_fn, 'w')
-    f.write(filelist_str)
-    f.close()
+    write_to_file(filelist_fn, filelist_str)
     
     top_opt = "-o %s" % str(target[0])
     tgt_opt = "-s %s" % str(target[0])
@@ -24,14 +34,8 @@ def iverilog_compile(target, source, env):
         "./%s" % str(target[0])
     
     script_fn = 'sim_%s.sh' % str(target[0])
-    
-    f = open(script_fn, 'w')
-    f.write(iv_cmd)
-    f.close()
 
-    os.chmod(script_fn, os.stat(script_fn).st_mode | stat.S_IEXEC)
-
-    # ----
+    write_to_file(script_fn, iv_cmd, executable = True)
 
     return None
 
