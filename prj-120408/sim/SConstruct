@@ -33,15 +33,12 @@ env = Environment(BUILDERS = {'IVERILOG' : bld})
 
 env['inc_dir'] = '../include'
 
-vfiles = [
-    '../rtl/verilog/counter.v', 
-    '../rtl/verilog/dff.v', 
-    '../rtl/verilog/full_adder.v',
-    '../bench/tb_counter.v',
-    '../bench/tb_dff.v',
-    '../bench/tb_full_adder.v',
-]
+vfiles = Glob('../rtl/verilog/*.v') + Glob('../bench/tb_*.v')
+tb_dff = env.IVERILOG('tb_dff', vfiles)
+tb_counter = env.IVERILOG('tb_counter', vfiles)
+tb_full_adder = env.IVERILOG('tb_full_adder', vfiles)
 
-env.IVERILOG('tb_dff', vfiles)
-env.IVERILOG('tb_counter', vfiles)
-env.IVERILOG('tb_full_adder', vfiles)
+Clean(tb_dff, 'sim_tb_dff.sh')
+Clean(tb_counter, 'sim_tb_counter.sh')
+Clean(tb_full_adder, 'sim_tb_full_adder.sh')
+
